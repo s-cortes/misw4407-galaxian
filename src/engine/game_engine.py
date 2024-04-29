@@ -3,10 +3,11 @@ import json
 import pygame
 import esper
 
-from src.create.prefab_creator import create_square
+from src.create.prefab_creator import create_square, crear_sprite
 from src.ecs.systems.s_movement import system_movement
 from src.ecs.systems.s_rendering import system_rendering
 from src.ecs.systems.s_screen_bounce import system_screen_bounce
+from src.engine.service_locator import ServiceLocator
 
 class GameEngine:
     def __init__(self) -> None:
@@ -27,9 +28,6 @@ class GameEngine:
                                      self.window_cfg["bg_color"]["b"])
         self.ecs_world = esper.World()
 
-        # Original framerate = 0
-        # Original bg_color (0, 200, 128)
-
     def _load_config_files(self):
         with open("assets/cfg/window.json", encoding="utf-8") as window_file:
             self.window_cfg = json.load(window_file)
@@ -46,11 +44,21 @@ class GameEngine:
         self._clean()
 
     def _create(self):
-        create_square(self.ecs_world, 
-                        pygame.Vector2(50, 50),
-                        pygame.Vector2(150, 100),
-                        pygame.Vector2(-100, 200),
-                        pygame.Color(255, 255, 100))
+        texto_sprite = ServiceLocator.texts_service.get_sprite(
+            "assets/fnt/PressStart2P.ttf",
+            "HI-SCORE",
+            pygame.Color(255,0,0),
+            10
+            )
+        letrero_surface = ServiceLocator.images_service.get("assets/img/invaders_logo_title.png")
+        crear_sprite(self.ecs_world,
+                     pygame.Vector2(50, 275),
+                     pygame.Vector2(0, -50),
+                     letrero_surface)
+        crear_sprite(self.ecs_world,
+                     pygame.Vector2(100, 258),
+                     pygame.Vector2(0, -50),
+                     texto_sprite)
 
     def _calculate_time(self):
         self.clock.tick(self.framerate)
