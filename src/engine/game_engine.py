@@ -4,6 +4,8 @@ import pygame
 import esper
 
 from src.create.prefab_creator import create_square, crear_sprite
+from src.ecs.systems.s_interface import system_interface
+from src.ecs.systems.s_interface_state import system_interface_state
 from src.ecs.systems.s_movement import system_movement
 from src.ecs.systems.s_rendering import system_rendering
 from src.ecs.systems.s_screen_bounce import system_screen_bounce
@@ -31,6 +33,10 @@ class GameEngine:
     def _load_config_files(self):
         with open("assets/cfg/window.json", encoding="utf-8") as window_file:
             self.window_cfg = json.load(window_file)
+        with open("assets/cfg/interface.json", encoding="utf-8") as window_file:
+            self.interface_cfg = json.load(window_file)
+        with open("assets/cfg/text_interface.json", encoding="utf-8") as window_file:
+            self.text_interface_cfg = json.load(window_file)
 
     async def run(self) -> None:
         self._create()
@@ -44,21 +50,7 @@ class GameEngine:
         self._clean()
 
     def _create(self):
-        texto_sprite = ServiceLocator.texts_service.get_sprite(
-            "assets/fnt/PressStart2P.ttf",
-            "HI-SCORE",
-            pygame.Color(255,0,0),
-            10
-            )
-        letrero_surface = ServiceLocator.images_service.get("assets/img/invaders_logo_title.png")
-        crear_sprite(self.ecs_world,
-                     pygame.Vector2(50, 275),
-                     pygame.Vector2(0, -50),
-                     letrero_surface)
-        crear_sprite(self.ecs_world,
-                     pygame.Vector2(100, 258),
-                     pygame.Vector2(0, -50),
-                     texto_sprite)
+        system_interface(self.ecs_world, self.interface_cfg, self.text_interface_cfg)
 
     def _calculate_time(self):
         self.clock.tick(self.framerate)
@@ -71,7 +63,8 @@ class GameEngine:
 
     def _update(self):
         system_movement(self.ecs_world, self.delta_time)
-        system_screen_bounce(self.ecs_world, self.screen)
+        #system_screen_bounce(self.ecs_world, self.screen)
+        system_interface_state(self.ecs_world)
 
     def _draw(self):
         self.screen.fill(self.bg_color)
