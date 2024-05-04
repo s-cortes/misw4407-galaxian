@@ -1,0 +1,4 @@
+from .s_star_movement import system_star_movement
+from .s_star_state import system_star_state
+from .s_star_spawner import sytem_star_spawner
+from src.ecs.systems.stars.s_star_screen_bounce import system_star_screen_bounce
