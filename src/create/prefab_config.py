@@ -7,7 +7,8 @@ INTERFACE_CONFIG_PATH = "assets/cfg/interface.json"
 INTRO_TEXT_CONFIG_PATH = "assets/cfg/intro_text.json"
 BOARD_TEXT_CONFIG_PATH = "assets/cfg/board_text.json"
 STARFIELD_CONFIG_PATH = "assets/cfg/starfield.json"
-
+LEVELS_CONFIG_PATH = "assets/cfg/levels.json"
+PLAYER_CONFIG_PATH = "assets/cfg/player.json"
 
 def _get_configuration(path: str) -> dict:
     config: dict
@@ -26,6 +27,7 @@ def configure_interface() -> dict:
 
 def _transform_text_data(config: dict, interface: dict):
     for text in config["texts"]:
+        text["text"] = str(interface.get(text["text"], text["text"]))
         text["color"] = interface[text["color"]]
         text["pos_ini"] = (text["pos_ini"]["x"], text["pos_ini"]["y"])
         text["pos_fin"] = (text["pos_fin"]["x"], text["pos_fin"]["y"])
@@ -64,4 +66,24 @@ def configure_starfield() -> dict:
         config["blink_rate"]["max"],
     )
     config["count"] = 0
+    return config
+
+
+def configure_levels() -> dict:
+    config = _get_configuration(LEVELS_CONFIG_PATH)
+    for level in config:
+        level["player"]["position"] = (
+            level["player"]["position"]["x"],
+            level["player"]["position"]["y"],
+        )
+        for invader in level["invaders"]:
+            invader["position"] = (
+                invader["position"]["x"],
+                invader["position"]["y"],
+            )
+    return config
+
+def configure_player() -> dict:
+    config = _get_configuration(PLAYER_CONFIG_PATH)
+    config["bullet"]["color"] = get_color(config["bullet"], "color")
     return config

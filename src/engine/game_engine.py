@@ -3,10 +3,13 @@ import asyncio
 import pygame
 
 import esper
+from src.create.components import create_c_player_bullet
 from src.create.prefab_config import (
     configure_board_text,
     configure_interface,
     configure_intro_text,
+    configure_levels,
+    configure_player,
     configure_starfield,
     configure_window,
 )
@@ -21,10 +24,18 @@ from src.create.components import (
     create_intro_text,
     create_board_text,
 )
-from src.ecs.components.base import CInput, InputPhase
+from src.ecs.components.base import CInput, InputName, InputPhase
+from src.ecs.components.tags import CTagPlayer
 from src.ecs.systems.base import system_input, system_rendering
 from src.ecs.systems.boards import system_board_movement, system_board_state
 from src.ecs.systems.intros import system_intro_movement, system_intro_state
+from src.ecs.systems.levels import system_level_spawner
+from src.ecs.systems.players import (
+    system_player_bullet_movement,
+    system_player_bullet_screen_clear,
+    system_player_movement,
+    system_player_screen_bounce,
+)
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
     system_star_movement,
@@ -37,21 +48,39 @@ class GameEngine:
     def __init__(self) -> None:
         # Configuracion archivos
         self.window_cfg: dict = configure_window()
-        self.interface: dict = configure_interface()
-        self.intro_text: dict = configure_intro_text(self.interface)
-        self.board_text: dict = configure_board_text(self.interface)
+        self.interface_cfg: dict = configure_interface()
+        self.intro_cfg: dict = configure_intro_text(self.interface_cfg)
+        self.board_cfg: dict = configure_board_text(self.interface_cfg)
         self.starfield_cfg: dict = configure_starfield()
+
+        self.levels_cfg: dict = configure_levels()
+        self.player_cfg: dict = configure_player()
 
         # Configuracion base
         self.framerate = self.window_cfg["framerate"]
         self.is_running = False
         self.delta_time = 0.0
 
-        self.show_intro = True
+        self.intro_on = True
+        self.level: dict = dict(
+            player=None, player_tag=None, current=-1, ended=True, paused=False
+        )
 
         pygame.init()
         self.clock = pygame.time.Clock()
         self.ecs_world = esper.World()
+
+    @property
+    def player_id(self) -> int:
+        return self.level["player"]
+
+    @property
+    def player_tag(self) -> CTagPlayer:
+        return self.level["player_tag"]
+
+    @property
+    def paused(self) -> bool:
+        return self.level["paused"]
 
     async def run(self) -> None:
         self._create()
@@ -69,11 +98,11 @@ class GameEngine:
         self.screen_rgb = get_screen_color(self.window_cfg)
         set_caption(self.window_cfg)
 
-        for text in self.intro_text["texts"]:
+        for text in self.intro_cfg["texts"]:
             create_intro_text(self.ecs_world, text)
-        for img in self.intro_text["images"]:
+        for img in self.intro_cfg["images"]:
             create_intro_image(self.ecs_world, img)
-        for text in self.board_text["texts"]:
+        for text in self.board_cfg["texts"]:
             create_board_text(self.ecs_world, text)
 
         create_intro_inputs(self.ecs_world)
@@ -90,15 +119,23 @@ class GameEngine:
 
     def _update(self):
         sytem_star_spawner(self.ecs_world, self.starfield_cfg, self.window_cfg)
+        system_level_spawner(
+            self.ecs_world, self.intro_on, self.level, self.levels_cfg, self.player_cfg
+        )
+
         system_intro_movement(self.ecs_world, self.delta_time)
         system_board_movement(self.ecs_world, self.delta_time)
         system_star_movement(self.ecs_world, self.delta_time)
+        system_player_movement(self.ecs_world, self.delta_time, self.paused)
+        system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
 
-        system_intro_state(self.ecs_world, self.show_intro)
+        system_intro_state(self.ecs_world, self.intro_on)
         system_board_state(self.ecs_world)
         system_star_state(self.ecs_world, self.delta_time)
 
         system_star_screen_bounce(self.ecs_world, self.screen)
+        system_player_screen_bounce(self.ecs_world, self.screen)
+        system_player_bullet_screen_clear(self.ecs_world, self.player_tag)
 
         self.ecs_world._clear_dead_entities()
 
@@ -111,5 +148,25 @@ class GameEngine:
         pygame.quit()
 
     def _do_action(self, c_input: CInput, event: pygame.event.Event = None):
-        if c_input.name == "PLAYER_Z":
-            self.show_intro = False
+        if c_input.name == InputName.PLAYER_P:
+            if c_input.phase == InputPhase.START:
+                self.level["paused"] = not self.level["paused"]
+
+        elif c_input.name == InputName.PLAYER_LEFT and self.player_tag:
+            if c_input.phase == InputPhase.START:
+                self.player_tag.left = True
+            elif c_input.phase == InputPhase.END:
+                self.player_tag.left = False
+        elif c_input.name == InputName.PLAYER_RIGHT and self.player_tag:
+            if c_input.phase == InputPhase.START:
+                self.player_tag.right = True
+            elif c_input.phase == InputPhase.END:
+                self.player_tag.right = False
+
+        elif c_input.name == InputName.PLAYER_Z and self.player_tag:
+            if c_input.phase == InputPhase.START and self.player_tag.bullets:
+                self.player_tag.bullets -= 1
+                create_c_player_bullet(self.ecs_world, self.player_id, self.player_cfg)
+
+        elif c_input.name == InputName.PLAYER_Z:
+            self.intro_on = False

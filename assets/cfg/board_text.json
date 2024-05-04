@@ -58,7 +58,7 @@
             }
         },
         {
-            "text": "5000",
+            "text": "high_score_max_value",
             "type": 1,
             "color": "high_score_color",
             "font": "assets/fnt/PressStart2P.ttf",
