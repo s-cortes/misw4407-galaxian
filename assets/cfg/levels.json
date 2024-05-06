@@ -1,0 +1,12 @@
+[
+    {
+        "player": {
+            "position": {
+                "x": 128,
+                "y": 200
+            },
+            "max_bullets": 4
+        },
+        "invaders": []
+    }
+]

@@ -1,4 +1,3 @@
-from pygame import Surface, image
 from pygame.font import Font
 
 
