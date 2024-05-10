@@ -6,6 +6,7 @@ import esper
 from src.create.components import create_c_player_bullet
 from src.create.prefab_config import (
     configure_board_text,
+    configure_enemies,
     configure_interface,
     configure_intro_text,
     configure_levels,
@@ -27,8 +28,17 @@ from src.create.components import (
 from src.ecs.components.base import CInput, InputName, InputPhase
 from src.ecs.components.tags import CTagPlayer
 from src.ecs.systems.base import system_input, system_rendering
+from src.ecs.systems.base.s_animation import system_animation
 from src.ecs.systems.boards import system_board_movement, system_board_state
 from src.ecs.systems.intros import system_intro_movement, system_intro_state
+from src.ecs.systems.invaders.s_invader_bullet_movement import system_invader_bullet_movement
+from src.ecs.systems.invaders.s_invaders_attack import system_invaders_attack
+from src.ecs.systems.invaders.s_invaders_bullet_spawn import system_update_invaders_bullet_spawner_time, \
+    system_invader_bullet_spawner
+from src.ecs.systems.invaders.s_invaders_movement import system_invaders_movement
+from src.ecs.systems.invaders.s_invaders_oscillation import system_invaders_oscillation
+from src.ecs.systems.invaders.s_invaders_spawn import system_update_invaders_spawner_time, system_invader_spawner
+from src.ecs.systems.invaders.s_invaders_state import system_invaders_state
 from src.ecs.systems.levels import system_level_spawner
 from src.ecs.systems.players import (
     system_player_bullet_movement,
@@ -53,6 +63,7 @@ class GameEngine:
         self.board_cfg: dict = configure_board_text(self.interface_cfg)
         self.starfield_cfg: dict = configure_starfield()
 
+        self.enemies_cfg: dict = configure_enemies()
         self.levels_cfg: dict = configure_levels()
         self.player_cfg: dict = configure_player()
 
@@ -63,7 +74,8 @@ class GameEngine:
 
         self.intro_on = True
         self.level: dict = dict(
-            player=None, player_tag=None, current=-1, ended=True, paused=False
+            player=None, player_tag=None, current=-1, ended=True, paused=False,
+            invaders_range=-1, invaders_velocity=-1
         )
 
         pygame.init()
@@ -120,7 +132,8 @@ class GameEngine:
     def _update(self):
         sytem_star_spawner(self.ecs_world, self.starfield_cfg, self.window_cfg)
         system_level_spawner(
-            self.ecs_world, self.intro_on, self.level, self.levels_cfg, self.player_cfg
+            self.ecs_world, self.intro_on, self.level, self.levels_cfg, self.player_cfg,
+            self.enemies_cfg
         )
 
         system_intro_movement(self.ecs_world, self.delta_time)
@@ -136,6 +149,20 @@ class GameEngine:
         system_star_screen_bounce(self.ecs_world, self.screen)
         system_player_screen_bounce(self.ecs_world, self.screen)
         system_player_bullet_screen_clear(self.ecs_world, self.player_tag)
+
+        system_invaders_movement(self.ecs_world, self.level, self.delta_time)
+        system_update_invaders_spawner_time(self.ecs_world, self.delta_time)
+        system_invader_spawner(self.ecs_world)
+        system_invaders_state(self.ecs_world, self.screen)
+        system_invaders_attack(self.ecs_world, self.level['player'], self.delta_time)
+
+        system_update_invaders_bullet_spawner_time(self.ecs_world, self.delta_time)
+        system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level['current']], self.level['player'])
+        system_invader_bullet_movement(self.ecs_world, self.delta_time, self.paused)
+
+        system_invaders_oscillation(self.ecs_world, self.levels_cfg[self.level['current']], self.delta_time)
+
+        system_animation(self.ecs_world, self.delta_time)
 
         self.ecs_world._clear_dead_entities()
 

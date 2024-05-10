@@ -9,6 +9,8 @@ BOARD_TEXT_CONFIG_PATH = "assets/cfg/board_text.json"
 STARFIELD_CONFIG_PATH = "assets/cfg/starfield.json"
 LEVELS_CONFIG_PATH = "assets/cfg/levels.json"
 PLAYER_CONFIG_PATH = "assets/cfg/player.json"
+ENEMIES_CONFIG_PATH = "assets/cfg/enemies.json"
+
 
 def _get_configuration(path: str) -> dict:
     config: dict
@@ -83,7 +85,12 @@ def configure_levels() -> dict:
             )
     return config
 
+
 def configure_player() -> dict:
     config = _get_configuration(PLAYER_CONFIG_PATH)
     config["bullet"]["color"] = get_color(config["bullet"], "color")
     return config
+
+
+def configure_enemies() -> dict:
+    return _get_configuration(ENEMIES_CONFIG_PATH)

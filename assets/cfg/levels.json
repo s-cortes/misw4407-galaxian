@@ -7,6 +7,162 @@
             },
             "max_bullets": 4
         },
-        "invaders": []
+        "invaders": [],
+        "invaders_spawner": {
+            "spawner_time": 2,
+            "spawner_size": 1
+        },
+        "invaders_range": 20,
+        "invaders_velocity": 10,
+        "invader_bullet": {
+          "size": {
+            "x": 3,
+            "y": 5
+          },
+          "color": {
+            "r": 100,
+            "g": 100,
+            "b": 100
+          },
+          "velocity": 50
+        },
+        "invaders_bullet_spawner": {
+          "shooters": 3,
+          "spawner_time": 2
+        },
+        "enemies": [
+            {
+                "description": "row_0",
+                "amount": 2,
+                "type": "invader_04",
+                "gap": 50,
+                "start_position": {
+                    "x": 90,
+                    "y": 35
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            },
+            {
+                "description": "row_1",
+                "amount": 6,
+                "type": "invader_03",
+                "gap": 17,
+                "start_position": {
+                    "x": 74,
+                    "y": 50
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            },
+            {
+                "description": "row_2",
+                "amount": 8,
+                "type": "invader_02",
+                "gap": 17,
+                "start_position": {
+                    "x": 55,
+                    "y": 62
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            },
+            {
+                "description": "row_3",
+                "amount": 10,
+                "type": "invader_01",
+                "gap": 17,
+                "start_position": {
+                    "x": 40,
+                    "y": 74
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            },
+            {
+                "description": "row_4",
+                "amount": 10,
+                "type": "invader_01",
+                "gap": 17,
+                "start_position": {
+                    "x": 40,
+                    "y": 85
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            },
+            {
+                "description": "row_5",
+                "amount": 10,
+                "type": "invader_01",
+                "gap": 17,
+                "start_position": {
+                    "x": 40,
+                    "y": 96
+                },
+                "attack_velocity": {
+                  "x": 30,
+                  "y": 40
+                },
+                "move_velocity": {
+                  "x": 10,
+                  "y": 0
+                },
+                "return_velocity": {
+                  "x": 40,
+                  "y": 40
+                }
+            }
+        ]
     }
 ]
