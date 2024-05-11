@@ -10,10 +10,9 @@
         "invaders": [],
         "invaders_spawner": {
             "spawner_time": 2,
-            "spawner_size": 1
+            "spawner_size": 3
         },
         "invaders_range": 20,
-        "invaders_velocity": 10,
         "invader_bullet": {
           "size": {
             "x": 3,
@@ -27,7 +26,7 @@
           "velocity": 50
         },
         "invaders_bullet_spawner": {
-          "shooters": 3,
+          "shooters": 1,
           "spawner_time": 2
         },
         "enemies": [
@@ -41,16 +40,16 @@
                     "y": 35
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             },
             {
@@ -63,16 +62,16 @@
                     "y": 50
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             },
             {
@@ -85,16 +84,16 @@
                     "y": 62
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             },
             {
@@ -107,16 +106,16 @@
                     "y": 74
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             },
             {
@@ -129,16 +128,16 @@
                     "y": 85
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             },
             {
@@ -151,16 +150,16 @@
                     "y": 96
                 },
                 "attack_velocity": {
-                  "x": 30,
-                  "y": 40
+                  "x": 50,
+                  "y": 50
                 },
                 "move_velocity": {
-                  "x": 10,
+                  "x": 20,
                   "y": 0
                 },
                 "return_velocity": {
-                  "x": 40,
-                  "y": 40
+                  "x": 30,
+                  "y": 30
                 }
             }
         ]

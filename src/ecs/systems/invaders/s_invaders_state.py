@@ -55,24 +55,30 @@ def _do_attack_state(c_animation: CAnimation, c_invader_state: CInvaderState,
 
 def _do_return_state(ecs_world: esper.World, c_velocity: CVelocity, c_invader_state: CInvaderState, c_invader: CTagInvader,
                      c_transform: CTransform, c_surface: CSurface, c_anim: CAnimation):
-    if (abs(c_transform.pos.x - c_invader.oscillation_position.x) > 2.0 or
-            abs(c_transform.pos.y - c_invader.oscillation_position.y) > 2.0):
+    if (abs(c_transform.pos.x - c_invader.oscillation_position.x) > 2 or
+            abs(c_transform.pos.y - c_invader.oscillation_position.y) > 2):
         velocity_normal = _normal_vector_direction(c_invader.oscillation_position, c_transform.pos)
         c_velocity.vel.x = (velocity_normal.x * c_invader.return_velocity.x)
         c_velocity.vel.y = (velocity_normal.y * c_invader.return_velocity.y)
         if c_invader.angle <= 0:
             c_velocity.angular_velocity = 0
     else:
+        c_transform.pos = c_invader.oscillation_position.copy()
         c_velocity.vel = c_invader.move_velocity.copy()
+
         c_surface.surf = c_invader.initial_surface
         c_surface.area = c_surface.surf.get_rect()
         c_surface.area.w = c_surface.surf.get_rect().w / c_anim.number_frames
         c_invader_state.state = InvaderState.MOVE
+
         components = ecs_world.get_component(CInvaderSpawner)
         c_spawner: CInvaderSpawner
         for _, (c_spawner) in components:
             c_spawner.spawn_is_on = False
             c_spawner.time = 0.0
+
+        if len(c_anim.animations) > 1:
+            _set_animation(c_anim, 0)
 
 
 def _set_animation(c_animation: CAnimation, animation_index: int):

@@ -17,7 +17,8 @@ def system_invaders_movement(world: World, level_cfg: dict, delta_time: float):
     for _, (c_velocity, c_transform, c_surface, c_anim, c_invader_state, c_invader) in components:
         c_transform.pos.x += c_velocity.vel.x * delta_time
         c_transform.pos.y += c_velocity.vel.y * delta_time
-        c_invader.start_position.x += c_velocity.vel.x * delta_time
+        c_invader.oscillation_position.x += c_invader.move_velocity.x * delta_time
+
 
         if c_invader_state.state != InvaderState.MOVE:
             c_invader.angle += c_velocity.angular_velocity

@@ -75,7 +75,7 @@ class GameEngine:
         self.intro_on = True
         self.level: dict = dict(
             player=None, player_tag=None, current=-1, ended=True, paused=False,
-            invaders_range=-1, invaders_velocity=-1
+            invaders_range=-1
         )
 
         pygame.init()

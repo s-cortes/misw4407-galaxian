@@ -14,6 +14,7 @@ def system_invader_bullet_spawner(ecs_world: esper.World, level_cfg: dict, playe
     for _, (c_bullet_spawner) in components:
         if c_bullet_spawner.time >= c_bullet_spawner.spawn_time:
             invaders_components = ecs_world.get_components(CSurface, CTransform, CTagInvader)
+            bullet_spawner = min(c_bullet_spawner.shooters, len(invaders_components))
             selected_invaders = random.sample(range(0, len(invaders_components)), c_bullet_spawner.shooters)
 
             for index in selected_invaders:

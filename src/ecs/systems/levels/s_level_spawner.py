@@ -26,4 +26,3 @@ def system_level_spawner(
     create_invaders_spawner(world, levels_cfg[level["current"]])
     create_invaders_bullet_spawner(world, levels_cfg[level["current"]])
     level['invaders_range'] = levels_cfg[level["current"]]['invaders_range']
-    level['invaders_velocity'] = levels_cfg[level["current"]]['invaders_velocity']
