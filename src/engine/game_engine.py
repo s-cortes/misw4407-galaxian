@@ -143,7 +143,8 @@ class GameEngine:
         system_star_movement(self.ecs_world, self.delta_time)
         system_player_movement(self.ecs_world, self.delta_time, self.paused)
         system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
-        system_player_bullet_colision(self.ecs_world)
+        system_player_bullet_colision(self.ecs_world, self.level['player'],
+                                      self.levels_cfg[self.level['current']]['player']['position'])
 
         system_intro_state(self.ecs_world, self.intro_on)
         system_board_state(self.ecs_world)
