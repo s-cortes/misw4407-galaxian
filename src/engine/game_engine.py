@@ -39,12 +39,14 @@ from src.ecs.systems.invaders.s_invaders_movement import system_invaders_movemen
 from src.ecs.systems.invaders.s_invaders_oscillation import system_invaders_oscillation
 from src.ecs.systems.invaders.s_invaders_spawn import system_update_invaders_spawner_time, system_invader_spawner
 from src.ecs.systems.invaders.s_invaders_state import system_invaders_state
+from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_colision
 from src.ecs.systems.levels import system_level_spawner
 from src.ecs.systems.players import (
     system_player_bullet_movement,
     system_player_bullet_screen_clear,
     system_player_movement,
     system_player_screen_bounce,
+    system_player_bullet_colision,
 )
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
@@ -141,6 +143,7 @@ class GameEngine:
         system_star_movement(self.ecs_world, self.delta_time)
         system_player_movement(self.ecs_world, self.delta_time, self.paused)
         system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
+        system_player_bullet_colision(self.ecs_world)
 
         system_intro_state(self.ecs_world, self.intro_on)
         system_board_state(self.ecs_world)
@@ -159,6 +162,7 @@ class GameEngine:
         system_update_invaders_bullet_spawner_time(self.ecs_world, self.delta_time)
         system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level['current']], self.level['player'])
         system_invader_bullet_movement(self.ecs_world, self.delta_time, self.paused)
+        system_invader_bullet_colision(self.ecs_world)
 
         system_invaders_oscillation(self.ecs_world, self.levels_cfg[self.level['current']], self.delta_time)
 
