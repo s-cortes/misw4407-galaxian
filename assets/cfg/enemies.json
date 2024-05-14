@@ -1,0 +1,90 @@
+{
+  "invader_01": {
+    "launch_sound": "assets/snd/enemy_launch.ogg",
+    "image": "assets/img/invaders_enemy_01.png",
+    "image_single": "assets/img/invaders_enemy_01_single.png",
+    "angular_velocity": 3,
+    "animations": {
+    "number_frames": 5,
+    "list": [
+      {
+        "name": "MOVE",
+        "start": 0,
+        "end": 4,
+        "framerate": 6
+      },
+      {
+        "name": "IDLE",
+        "start": 0,
+        "end": 0,
+        "framerate": 1
+      }
+    ]
+  }
+  },
+  "invader_02": {
+    "launch_sound": "assets/snd/enemy_launch.ogg",
+    "image": "assets/img/invaders_enemy_02.png",
+    "image_single": "assets/img/invaders_enemy_02_single.png",
+    "angular_velocity": 3,
+    "animations": {
+    "number_frames": 5,
+    "list": [
+      {
+        "name": "MOVE",
+        "start": 0,
+        "end": 4,
+        "framerate": 4
+      },
+      {
+        "name": "IDLE",
+        "start": 0,
+        "end": 0,
+        "framerate": 1
+      }
+
+    ]
+  }
+  },
+  "invader_03": {
+    "launch_sound": "assets/snd/enemy_launch.ogg",
+    "image": "assets/img/invaders_enemy_03.png",
+    "image_single": "assets/img/invaders_enemy_03_single.png",
+    "angular_velocity": 3,
+    "animations": {
+    "number_frames": 5,
+    "list": [
+      {
+        "name": "MOVE",
+        "start": 0,
+        "end": 4,
+        "framerate": 6
+      },
+      {
+        "name": "IDLE",
+        "start": 0,
+        "end": 0,
+        "framerate": 1
+      }
+
+    ]
+  }
+  },
+  "invader_04": {
+    "launch_sound": "assets/snd/enemy_launch.ogg",
+    "image": "assets/img/invaders_enemy_04.png",
+    "image_single": "assets/img/invaders_enemy_04.png",
+    "angular_velocity": 3,
+    "animations": {
+    "number_frames": 1,
+    "list": [
+      {
+        "name": "IDLE",
+        "start": 0,
+        "end": 0,
+        "framerate": 1
+      }
+    ]
+  }
+  }
+}
