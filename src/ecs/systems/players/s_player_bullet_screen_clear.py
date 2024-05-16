@@ -14,4 +14,5 @@ def system_player_bullet_screen_clear(world: World, player_tag: CTagPlayer):
         cuad_rect = CSurface.get_relative_area(c_surface.area, c_transform.pos)
         if cuad_rect.top < 0:
             world.delete_entity(bullet_entity)
-            player_tag.bullets += 1
+            if player_tag:
+                player_tag.bullets += 1

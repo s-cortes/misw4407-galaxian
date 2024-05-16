@@ -4,3 +4,4 @@ class CTagPlayer:
         self.bullets: int = bullets
         self.left: bool = False
         self.right: bool = False
+        self.lifes = 1
