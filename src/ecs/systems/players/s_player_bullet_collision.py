@@ -1,11 +1,12 @@
 import esper
+from src.create.components.prefab_p_explosion import create_explosion
 from src.ecs.components.base import CSurface, CTransform
 from src.ecs.components.tags.c_tag_invader_bullet import CTagInvaderBullet
 from src.ecs.components.tags.c_tag_player import CTagPlayer
 from src.ecs.components.base.c_lives import CLives
 from src.ecs.components.base import CLivesIndicator
 
-def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: int, config: tuple):
+def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: int, config: tuple, death_config: dict):
     if player_entity_int is not None:
         bullet_components = ecs_world.get_components(CSurface, CTransform, CTagInvaderBullet)
         player_components = ecs_world.get_components(CSurface, CTransform, CTagPlayer)
@@ -23,6 +24,7 @@ def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: in
                 if bullet_rect.colliderect(player_rect):
                     ecs_world.delete_entity(bullet_entity, True)
                     player_lives.lives -= 1
+                    create_explosion(ecs_world, player_transform.pos, death_config)
                     player_transform.pos.x = config[0]
                     player_transform.pos.y = config[1]
                     update_life_indicators(ecs_world, player_lives.lives)

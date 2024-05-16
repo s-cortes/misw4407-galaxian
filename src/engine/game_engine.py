@@ -145,7 +145,7 @@ class GameEngine:
         system_player_movement(self.ecs_world, self.delta_time, self.paused)
         system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
         system_player_bullet_collision(self.ecs_world, self.level['player'],
-                                      self.levels_cfg[self.level['current']]['player']['position'])
+                                      self.levels_cfg[self.level['current']]['player']['position'], self.player_cfg["death"])
         system_handle_lives(self.ecs_world, self.level['player'])
 
         system_intro_state(self.ecs_world, self.intro_on)
