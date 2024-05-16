@@ -1,0 +1,44 @@
+{
+    "GAME_OVER": {
+        "sound": "assets/snd/game_over.ogg",
+        "text": {
+            "text": "GAME OVER",
+            "color": "title_text_color",
+            "font": "assets/fnt/PressStart2P.ttf",
+            "size": 10,
+            "velocity": {
+                "x": 0,
+                "y": 0
+            },
+            "pos_ini": {
+                "x": 128,
+                "y": 180
+            },
+            "pos_fin": {
+                "x": 128,
+                "y": 180
+            }
+        }
+    },
+    "GAME_WON": {
+        "sound": "assets/snd/game_over.ogg",
+        "text": {
+            "text": "GAME OVER",
+            "color": "title_text_color",
+            "font": "assets/fnt/PressStart2P.ttf",
+            "size": 10,
+            "velocity": {
+                "x": 0,
+                "y": 0
+            },
+            "pos_ini": {
+                "x": 128,
+                "y": 180
+            },
+            "pos_fin": {
+                "x": 128,
+                "y": 180
+            }
+        }
+    }
+}

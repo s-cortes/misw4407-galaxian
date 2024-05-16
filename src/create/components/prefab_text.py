@@ -4,7 +4,7 @@ from esper import World
 from src.create.prefab_base import create_sprite, get_color
 from src.ecs.components.base import CSurface
 from src.ecs.components.states import CBoardState, CIntroState
-from src.ecs.components.tags import CTagBoard, CTagIntro
+from src.ecs.components.tags import CTagBoard, CTagInfo, CTagIntro
 from src.engine.services.service_locator import ServiceLocator
 
 
@@ -44,3 +44,8 @@ def create_board_text(world: World, text: dict):
     world.add_component(entity, CTagBoard(pos_fin, text["text"], text["type"]))
     world.add_component(entity, CBoardState())
     return entity
+
+
+def create_info_text(world: World, text: dict):
+    entity = _create_text(world, text)
+    world.add_component(entity, CTagInfo())

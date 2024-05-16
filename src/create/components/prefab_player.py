@@ -1,10 +1,17 @@
 from pygame import Color, Vector2
 from esper import World
 from src.create.prefab_base import create_sprite, create_square
-from src.ecs.components.base import CSurface, CTransform
-from src.ecs.components.states import CPlayerState
+from src.ecs.components.base import CSurface, CTransform, CLevel
+from src.ecs.components.states import CLevelState, CPlayerState
 from src.ecs.components.tags import CTagPlayer, CTagPlayerBullet
 from src.engine.services import ServiceLocator
+
+
+def create_c_level(world: World):
+    entity = world.create_entity()
+    world.add_component(entity, CLevel())
+    world.add_component(entity, CLevelState())
+    return entity
 
 
 def create_c_player(world: World, config: dict, level_cfg: dict) -> int:

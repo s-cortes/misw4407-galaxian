@@ -6,6 +6,8 @@ WINDOW_CONFIG_PATH = "assets/cfg/window.json"
 INTERFACE_CONFIG_PATH = "assets/cfg/interface.json"
 INTRO_TEXT_CONFIG_PATH = "assets/cfg/intro_text.json"
 BOARD_TEXT_CONFIG_PATH = "assets/cfg/board_text.json"
+PAUSED_TEXT_CONFIG_PATH = "assets/cfg/paused_text.json"
+GAME_END_CONFIG_PATH = "assets/cfg/game_end.json"
 STARFIELD_CONFIG_PATH = "assets/cfg/starfield.json"
 LEVELS_CONFIG_PATH = "assets/cfg/levels.json"
 PLAYER_CONFIG_PATH = "assets/cfg/player.json"
@@ -27,13 +29,12 @@ def configure_interface() -> dict:
     return _get_configuration(INTERFACE_CONFIG_PATH)
 
 
-def _transform_text_data(config: dict, interface: dict):
-    for text in config["texts"]:
-        text["text"] = str(interface.get(text["text"], text["text"]))
-        text["color"] = interface[text["color"]]
-        text["pos_ini"] = (text["pos_ini"]["x"], text["pos_ini"]["y"])
-        text["pos_fin"] = (text["pos_fin"]["x"], text["pos_fin"]["y"])
-        text["velocity"] = (text["velocity"]["x"], text["velocity"]["y"])
+def _transform_text_data(text: dict, interface: dict):
+    text["text"] = str(interface.get(text["text"], text["text"]))
+    text["color"] = interface[text["color"]]
+    text["pos_ini"] = (text["pos_ini"]["x"], text["pos_ini"]["y"])
+    text["pos_fin"] = (text["pos_fin"]["x"], text["pos_fin"]["y"])
+    text["velocity"] = (text["velocity"]["x"], text["velocity"]["y"])
 
 
 def _transform_image_data(config: dict):
@@ -45,14 +46,29 @@ def _transform_image_data(config: dict):
 
 def configure_intro_text(interface: dict) -> dict:
     config: dict = _get_configuration(INTRO_TEXT_CONFIG_PATH)
-    _transform_text_data(config, interface)
+    for text in config["texts"]:
+        _transform_text_data(text, interface)
     _transform_image_data(config)
     return config
 
 
 def configure_board_text(interface: dict) -> dict:
     config: dict = _get_configuration(BOARD_TEXT_CONFIG_PATH)
-    _transform_text_data(config, interface)
+    for text in config["texts"]:
+        _transform_text_data(text, interface)
+    return config
+
+
+def configure_paused_text(interface: dict) -> dict:
+    config: dict = _get_configuration(PAUSED_TEXT_CONFIG_PATH)
+    _transform_text_data(config["text"], interface)
+    return config
+
+
+def configure_game_end(interface: dict) -> dict:
+    config: dict = _get_configuration(GAME_END_CONFIG_PATH)
+    _transform_text_data(config["GAME_OVER"]["text"], interface)
+    _transform_text_data(config["GAME_WON"]["text"], interface)
     return config
 
 
@@ -79,9 +95,21 @@ def configure_levels() -> dict:
             level["player"]["position"]["y"],
         )
         for invader in level["invaders"]:
-            invader["position"] = (
-                invader["position"]["x"],
-                invader["position"]["y"],
+            invader["start_position"] = (
+                invader["start_position"]["x"],
+                invader["start_position"]["y"],
+            )
+            invader["attack_velocity"] = (
+                invader["attack_velocity"]["x"],
+                invader["attack_velocity"]["y"],
+            )
+            invader["move_velocity"] = (
+                invader["move_velocity"]["x"],
+                invader["move_velocity"]["y"],
+            )
+            invader["return_velocity"] = (
+                invader["return_velocity"]["x"],
+                invader["return_velocity"]["y"],
             )
     return config
 
