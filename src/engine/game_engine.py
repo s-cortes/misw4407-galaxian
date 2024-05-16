@@ -165,7 +165,7 @@ class GameEngine:
         system_update_invaders_bullet_spawner_time(self.ecs_world, self.delta_time)
         system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level['current']], self.level['player'])
         system_invader_bullet_movement(self.ecs_world, self.delta_time, self.paused)
-        system_invader_bullet_colision(self.ecs_world)
+        system_invader_bullet_colision(self.ecs_world, self.enemies_cfg['death'])
 
         system_invaders_oscillation(self.ecs_world, self.levels_cfg[self.level['current']], self.delta_time)
 

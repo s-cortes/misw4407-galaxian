@@ -4,3 +4,4 @@ from .c_tag_player import CTagPlayer
 from .c_tag_player_bullet import CTagPlayerBullet
 from .c_tag_star import CTagStar
 from .c_tag_player_explosion import CTagPlayerExplosion
+from .c_tag_invader_explosion import CTagInvaderExplosion

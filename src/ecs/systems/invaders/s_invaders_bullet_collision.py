@@ -2,8 +2,9 @@ import esper
 from src.ecs.components.base import CSurface, CTransform
 from src.ecs.components.tags.c_tag_player_bullet import CTagPlayerBullet
 from src.ecs.components.tags.c_tag_invader import CTagInvader
+from src.create.components.prefab_i_explosion import create_explosion
 
-def system_invader_bullet_colision(ecs_world: esper.World):
+def system_invader_bullet_colision(ecs_world: esper.World, death_config: dict):
     bullet_components = ecs_world.get_components(CSurface, CTransform, CTagPlayerBullet)
     invader_components = ecs_world.get_components(CSurface, CTransform, CTagInvader)
     for bullet_entity, (bullet_c_s, bullet_c_t, bullet_c_t_e) in bullet_components:
@@ -15,5 +16,6 @@ def system_invader_bullet_colision(ecs_world: esper.World):
             enemy_rect.topleft = enemy_c_t.pos
 
             if bullet_rect.colliderect(enemy_rect):
-                ecs_world.delete_entity(enemy_entity)
                 ecs_world.delete_entity(bullet_entity, True)
+                create_explosion(ecs_world, enemy_c_t.pos, death_config)
+                ecs_world.delete_entity(enemy_entity)
