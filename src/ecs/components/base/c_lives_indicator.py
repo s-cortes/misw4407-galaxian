@@ -1,0 +1,2 @@
+class CLivesIndicator:
+    pass

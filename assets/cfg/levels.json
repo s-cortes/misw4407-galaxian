@@ -6,7 +6,14 @@
                 "y": 200
             },
             "max_bullets": 4,
-            "max_lives": 3
+            "lives": {
+              "position": {
+                "x": 190,
+                "y": 25
+              },
+              "max_lives": 3,
+              "img": "assets/img/invaders_life.png"
+            }
         },
         "invaders": [],
         "invaders_spawner": {

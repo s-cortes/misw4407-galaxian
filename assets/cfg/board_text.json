@@ -75,25 +75,6 @@
                 "x": 170,
                 "y": 25
             }
-        },
-        {
-            "text": "TEST",
-            "type": 0,
-            "color": "title_text_color",
-            "font": "assets/fnt/PressStart2P.ttf",
-            "size": 8,
-            "velocity": {
-                "x": 0,
-                "y": -100
-            },
-            "pos_ini": {
-                "x": 180,
-                "y": 260
-            },
-            "pos_fin": {
-                "x": 180,
-                "y": 25
-            }
         }
     ],
     "images": []

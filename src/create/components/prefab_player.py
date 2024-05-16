@@ -6,6 +6,7 @@ from src.ecs.components.states import CPlayerState
 from src.ecs.components.tags import CTagPlayer, CTagPlayerBullet
 from src.engine.services import ServiceLocator
 from src.ecs.components.base import CLives
+from src.ecs.components.base import CLivesIndicator
 
 
 def create_c_player(world: World, config: dict, level_cfg: dict) -> int:
@@ -23,7 +24,8 @@ def create_c_player(world: World, config: dict, level_cfg: dict) -> int:
     entity = create_sprite(world, pos, surface, vel)
     world.add_component(entity, CTagPlayer(spawn["max_bullets"]))
     world.add_component(entity, CPlayerState())
-    world.add_component(entity, CLives(3))
+    world.add_component(entity, CLives(spawn["lives"]["max_lives"]))
+    create_life_indicators(world, spawn["lives"])
     return entity
 
 
@@ -45,3 +47,12 @@ def create_c_player_bullet(world: World, entity_p: int, player_cfg: dict):
 
     ServiceLocator.sounds_service.play(config["sound"])
     return entity
+
+def create_life_indicators(world: World, lives_cfg: dict):
+    surface = ServiceLocator.images_service.get(lives_cfg["img"])
+    size = surface.get_rect().size
+    pos = Vector2(lives_cfg["position"]["x"], lives_cfg["position"]["y"])
+    for i in range(lives_cfg["max_lives"]):
+        life_pos = pos + Vector2(i * (size[0] + 5), 0)
+        life_entity = create_sprite(world, life_pos, surface, Vector2(0, 0))
+        world.add_component(life_entity, CLivesIndicator())

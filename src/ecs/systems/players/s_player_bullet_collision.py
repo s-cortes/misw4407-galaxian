@@ -3,8 +3,9 @@ from src.ecs.components.base import CSurface, CTransform
 from src.ecs.components.tags.c_tag_invader_bullet import CTagInvaderBullet
 from src.ecs.components.tags.c_tag_player import CTagPlayer
 from src.ecs.components.base.c_lives import CLives
+from src.ecs.components.base import CLivesIndicator
 
-def system_player_bullet_colision(ecs_world: esper.World, player_entity_int: int, config: tuple):
+def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: int, config: tuple):
     if player_entity_int is not None:
         bullet_components = ecs_world.get_components(CSurface, CTransform, CTagInvaderBullet)
         player_components = ecs_world.get_components(CSurface, CTransform, CTagPlayer)
@@ -24,6 +25,14 @@ def system_player_bullet_colision(ecs_world: esper.World, player_entity_int: int
                     player_lives.lives -= 1
                     player_transform.pos.x = config[0]
                     player_transform.pos.y = config[1]
+                    update_life_indicators(ecs_world, player_lives.lives)
 
     else:
         return
+
+
+def update_life_indicators(world: esper.World, lives_left: int):
+    life_entities = list(world.get_component(CLivesIndicator))
+    for i, (entity, _) in enumerate(life_entities):
+        if i >= lives_left:
+            world.delete_entity(entity)
