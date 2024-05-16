@@ -5,7 +5,8 @@
                 "x": 128,
                 "y": 200
             },
-            "max_bullets": 4
+            "max_bullets": 4,
+            "max_lives": 3
         },
         "invaders": [],
         "invaders_spawner": {

@@ -47,6 +47,7 @@ from src.ecs.systems.players import (
     system_player_movement,
     system_player_screen_bounce,
     system_player_bullet_colision,
+    system_handle_lives,
 )
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
@@ -145,6 +146,7 @@ class GameEngine:
         system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
         system_player_bullet_colision(self.ecs_world, self.level['player'],
                                       self.levels_cfg[self.level['current']]['player']['position'])
+        system_handle_lives(self.ecs_world, self.level['player'])
 
         system_intro_state(self.ecs_world, self.intro_on)
         system_board_state(self.ecs_world)

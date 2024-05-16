@@ -5,6 +5,7 @@ from src.ecs.components.base import CSurface, CTransform
 from src.ecs.components.states import CPlayerState
 from src.ecs.components.tags import CTagPlayer, CTagPlayerBullet
 from src.engine.services import ServiceLocator
+from src.ecs.components.base import CLives
 
 
 def create_c_player(world: World, config: dict, level_cfg: dict) -> int:
@@ -22,6 +23,7 @@ def create_c_player(world: World, config: dict, level_cfg: dict) -> int:
     entity = create_sprite(world, pos, surface, vel)
     world.add_component(entity, CTagPlayer(spawn["max_bullets"]))
     world.add_component(entity, CPlayerState())
+    world.add_component(entity, CLives(3))
     return entity
 
 
