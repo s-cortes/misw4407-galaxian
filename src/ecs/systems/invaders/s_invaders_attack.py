@@ -1,16 +1,19 @@
 from esper import World
-from src.ecs.components.base import CTransform, CVelocity, CSurface
+from src.ecs.components.base import CLevel, CTransform, CVelocity, CSurface
 from src.ecs.components.states.c_invader_state import CInvaderState, InvaderState
 from src.ecs.components.tags.c_tag_invader import CTagInvader
 from pygame import Vector2
 import pygame
 
 
-def system_invaders_attack(world: World, player_entity: int, delta_time: float):
-    if player_entity is None:
+def system_invaders_attack(
+    world: World, player_entity: int, delta_time: float, level: CLevel
+):
+    if any([level.paused, level.completed, player_entity is None]):
         return
-
-    components = world.get_components(CVelocity, CTransform, CSurface, CInvaderState, CTagInvader)
+    components = world.get_components(
+        CVelocity, CTransform, CSurface, CInvaderState, CTagInvader
+    )
     c_player_transform = world.component_for_entity(player_entity, CTransform)
     c_velocity: CVelocity
     c_transform: CTransform
@@ -38,5 +41,7 @@ def system_invaders_attack(world: World, player_entity: int, delta_time: float):
             c_velocity.vel = final_vector.lerp(final_vector, (5 * delta_time))
 
 
-def _normal_vector_direction(vector_target: pygame.Vector2, vector_origin: pygame.Vector2) -> pygame.Vector2:
+def _normal_vector_direction(
+    vector_target: pygame.Vector2, vector_origin: pygame.Vector2
+) -> pygame.Vector2:
     return (vector_target - vector_origin).normalize()

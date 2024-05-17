@@ -13,9 +13,8 @@ import esper
 
 
 def create_set_invaders(world: World, enemies_cfg: dict, level_cfg: dict):
-    for row in level_cfg['enemies']:
-        position = Vector2(row['start_position']['x'],
-                           row['start_position']['y'])
+    for row in level_cfg['invaders']:
+        position = Vector2(*row['start_position'])
 
         for _ in range(row['amount']):
             create_c_invader(world, enemies_cfg[row['type']], row, position)
@@ -29,14 +28,11 @@ def create_c_invader(world: World, invader_cfg: dict,
 
     entity = create_sprite(world, position.copy(), surface, Vector2(0, 0))
 
-    attack_velocity = Vector2(row_cfg['attack_velocity']['x'],
-                              row_cfg['attack_velocity']['y'])
+    attack_velocity = Vector2(*row_cfg['attack_velocity'])
 
-    move_velocity = Vector2(row_cfg['move_velocity']['x'],
-                            row_cfg['move_velocity']['y'])
+    move_velocity = Vector2(*row_cfg['move_velocity'])
 
-    return_velocity = Vector2(row_cfg['return_velocity']['x'],
-                              row_cfg['return_velocity']['y'])
+    return_velocity = Vector2(*row_cfg['return_velocity'])
 
     c_invader = CTagInvader(position.copy(), attack_velocity, invader_cfg['angular_velocity'],
                             return_velocity, move_velocity, surface.copy(), single_surface.copy(),
