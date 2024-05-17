@@ -1,7 +1,5 @@
 from enum import Enum
 
-from pygame import Vector2
-
 
 class BoardState(Enum):
     IDLE = 0

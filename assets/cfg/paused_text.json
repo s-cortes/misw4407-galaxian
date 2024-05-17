@@ -1,0 +1,21 @@
+{
+    "text": {
+        "text": "PAUSED",
+        "color": "title_text_color",
+        "font": "assets/fnt/PressStart2P.ttf",
+        "size": 10,
+        "velocity": {
+            "x": 0,
+            "y": 0
+        },
+        "pos_ini": {
+            "x": 128,
+            "y": 120
+        },
+        "pos_fin": {
+            "x": 128,
+            "y": 120
+        }
+    },
+    "sound": "assets/snd/game_paused.ogg"
+}

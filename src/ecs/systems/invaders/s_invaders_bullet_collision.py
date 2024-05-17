@@ -16,4 +16,4 @@ def system_invader_bullet_colision(ecs_world: esper.World):
 
             if bullet_rect.colliderect(enemy_rect):
                 ecs_world.delete_entity(enemy_entity)
-                ecs_world.delete_entity(bullet_entity, True)
+                ecs_world.delete_entity(bullet_entity)
