@@ -30,7 +30,7 @@ from src.ecs.components.base import CInput, InputName, InputPhase, CLevel
 from src.ecs.components.tags import CTagPlayer
 from src.ecs.systems.base import system_input, system_rendering
 from src.ecs.systems.base.s_animation import system_animation
-from src.ecs.systems.boards import system_board_movement, system_board_state
+from src.ecs.systems.boards import system_board_movement, system_board_state, system_board_update_hi_score
 from src.ecs.systems.intros import system_intro_movement, system_intro_state
 from src.ecs.systems.invaders.s_invader_bullet_movement import system_invader_bullet_movement
 from src.ecs.systems.invaders.s_invaders_attack import system_invaders_attack
@@ -190,6 +190,7 @@ class GameEngine:
         system_player_bullet_collision(self.ecs_world, self.player_id,
                                       self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
         system_player_lives(self.ecs_world, self.player_id)
+        system_board_update_hi_score(self.ecs_world)
 
         # animation
         system_animation(self.ecs_world, self.delta_time)
