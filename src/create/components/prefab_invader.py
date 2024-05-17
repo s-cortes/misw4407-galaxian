@@ -40,7 +40,7 @@ def create_c_invader(world: World, invader_cfg: dict,
 
     c_invader = CTagInvader(position.copy(), attack_velocity, invader_cfg['angular_velocity'],
                             return_velocity, move_velocity, surface.copy(), single_surface.copy(),
-                            invader_cfg['launch_sound'])
+                            invader_cfg['launch_sound'], invader_cfg['points'])
 
     world.add_component(entity, c_invader)
     world.add_component(entity, CAnimation(invader_cfg['animations']))

@@ -29,7 +29,7 @@ from src.ecs.components.base import CInput, InputName, InputPhase
 from src.ecs.components.tags import CTagPlayer
 from src.ecs.systems.base import system_input, system_rendering
 from src.ecs.systems.base.s_animation import system_animation
-from src.ecs.systems.boards import system_board_movement, system_board_state
+from src.ecs.systems.boards import system_board_movement, system_board_state, system_board_update_hi_score
 from src.ecs.systems.intros import system_intro_movement, system_intro_state
 from src.ecs.systems.invaders.s_invader_bullet_movement import system_invader_bullet_movement
 from src.ecs.systems.invaders.s_invaders_attack import system_invaders_attack
@@ -39,7 +39,7 @@ from src.ecs.systems.invaders.s_invaders_movement import system_invaders_movemen
 from src.ecs.systems.invaders.s_invaders_oscillation import system_invaders_oscillation
 from src.ecs.systems.invaders.s_invaders_spawn import system_update_invaders_spawner_time, system_invader_spawner
 from src.ecs.systems.invaders.s_invaders_state import system_invaders_state
-from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_colision
+from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_collision
 from src.ecs.systems.levels import system_level_spawner
 from src.ecs.systems.players import (
     system_player_bullet_movement,
@@ -80,6 +80,8 @@ class GameEngine:
             player=None, player_tag=None, current=-1, ended=True, paused=False,
             invaders_range=-1
         )
+        self.score_data = None
+        self.hi_score_data = None
 
         pygame.init()
         self.clock = pygame.time.Clock()
@@ -118,7 +120,17 @@ class GameEngine:
         for img in self.intro_cfg["images"]:
             create_intro_image(self.ecs_world, img)
         for text in self.board_cfg["texts"]:
-            create_board_text(self.ecs_world, text)
+            if text['name'] == 'score_indicator':
+                score_ent = create_board_text(self.ecs_world, text)
+                self.score_data = text
+                self.score_data['ent'] = score_ent
+            elif text['name'] == 'hi_score_indicator':
+                hi_score_ent = create_board_text(self.ecs_world, text)
+                self.hi_score_data = text
+                self.hi_score_data['ent'] = hi_score_ent
+            else:
+                create_board_text(self.ecs_world, text)
+
 
         create_intro_inputs(self.ecs_world)
 
@@ -150,6 +162,7 @@ class GameEngine:
 
         system_intro_state(self.ecs_world, self.intro_on)
         system_board_state(self.ecs_world)
+        system_board_update_hi_score(self.ecs_world, self.score_data['ent'], self.hi_score_data)
         system_star_state(self.ecs_world, self.delta_time)
 
         system_star_screen_bounce(self.ecs_world, self.screen)
@@ -165,7 +178,7 @@ class GameEngine:
         system_update_invaders_bullet_spawner_time(self.ecs_world, self.delta_time)
         system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level['current']], self.level['player'])
         system_invader_bullet_movement(self.ecs_world, self.delta_time, self.paused)
-        system_invader_bullet_colision(self.ecs_world, self.enemies_cfg['death'])
+        system_invader_bullet_collision(self.ecs_world, self.enemies_cfg, self.score_data)
 
         system_invaders_oscillation(self.ecs_world, self.levels_cfg[self.level['current']], self.delta_time)
 
