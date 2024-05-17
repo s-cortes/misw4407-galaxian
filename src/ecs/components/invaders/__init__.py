@@ -1,2 +1,3 @@
 from .c_invader_bullet_spawner import CInvaderBulletSpawner
 from .c_invader_spawner import CInvaderSpawner
+from .c_player_intangible import CIntangible

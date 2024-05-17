@@ -2,4 +2,4 @@ from .s_player_bullet_movement import system_player_bullet_movement
 from .s_player_bullet_screen_clear import system_player_bullet_screen_clear
 from .s_player_movement import system_player_movement
 from .s_player_screen_bounce import system_player_screen_bounce
-from .s_player_bullet_collision import system_player_bullet_colision
+from .s_player_bullet_collision import system_player_bullet_collision

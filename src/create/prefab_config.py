@@ -12,6 +12,7 @@ STARFIELD_CONFIG_PATH = "assets/cfg/starfield.json"
 LEVELS_CONFIG_PATH = "assets/cfg/levels.json"
 PLAYER_CONFIG_PATH = "assets/cfg/player.json"
 ENEMIES_CONFIG_PATH = "assets/cfg/enemies.json"
+DEATH_CONFIG_PATH = "assets/cfg/death_config.json"
 
 
 def _get_configuration(path: str) -> dict:
@@ -122,3 +123,6 @@ def configure_player() -> dict:
 
 def configure_enemies() -> dict:
     return _get_configuration(ENEMIES_CONFIG_PATH)
+
+def configure_death() -> dict:
+    return _get_configuration(DEATH_CONFIG_PATH)

@@ -15,6 +15,7 @@ from src.create.prefab_config import (
     configure_player,
     configure_starfield,
     configure_window,
+    configure_death,
 )
 from src.create.components import create_intro_inputs
 from src.create.prefab_interface import (
@@ -38,14 +39,14 @@ from src.ecs.systems.invaders.s_invaders_movement import system_invaders_movemen
 from src.ecs.systems.invaders.s_invaders_oscillation import system_invaders_oscillation
 from src.ecs.systems.invaders.s_invaders_spawn import system_update_invaders_spawner_time, system_invader_spawner
 from src.ecs.systems.invaders.s_invaders_state import system_invaders_state
-from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_colision
+from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_collision
 from src.ecs.systems.levels import system_level_state
 from src.ecs.systems.players import (
     system_player_bullet_movement,
     system_player_bullet_screen_clear,
     system_player_movement,
     system_player_screen_bounce,
-    system_player_bullet_colision,
+    system_player_bullet_collision,
 )
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
@@ -69,6 +70,7 @@ class GameEngine:
         self.enemies_cfg: dict = configure_enemies()
         self.levels_cfg: dict = configure_levels()
         self.player_cfg: dict = configure_player()
+        self.death_cfg: dict = configure_death()
 
         # Configuracion base
         self.framerate = self.window_cfg["framerate"]
@@ -180,9 +182,9 @@ class GameEngine:
         system_star_screen_bounce(self.ecs_world, self.screen)
         system_player_screen_bounce(self.ecs_world, self.screen)
         system_player_bullet_screen_clear(self.ecs_world, self.player_tag)
-        system_invader_bullet_colision(self.ecs_world)
-        system_player_bullet_colision(self.ecs_world, self.player_id,
-                                      self.levels_cfg[self.level.current]['player']['position'])
+        system_invader_bullet_collision(self.ecs_world, self.death_cfg)
+        system_player_bullet_collision(self.ecs_world, self.player_id,
+                                      self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
 
         # animation
         system_animation(self.ecs_world, self.delta_time)
