@@ -155,7 +155,7 @@ class GameEngine:
         system_update_invaders_spawner_time(self.ecs_world, self.delta_time)
         system_invader_spawner(self.ecs_world)
         system_update_invaders_bullet_spawner_time(self.ecs_world, self.delta_time)
-        system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level.current], self.player_id)
+        system_invader_bullet_spawner(self.ecs_world, self.levels_cfg[self.level.current])
 
         # movement
         system_intro_movement(self.ecs_world, self.delta_time)
@@ -163,9 +163,9 @@ class GameEngine:
         system_star_movement(self.ecs_world, self.delta_time)
 
         system_player_movement(self.ecs_world, self.delta_time, self.paused)
-        system_invaders_movement(self.ecs_world, self.delta_time, self.level)
         system_invaders_attack(self.ecs_world, self.player_id, self.delta_time, self.level)
         system_invaders_oscillation(self.ecs_world, self.levels_cfg[self.level.current], self.level)
+        system_invaders_movement(self.ecs_world, self.delta_time, self.level)
 
         system_player_bullet_movement(self.ecs_world, self.delta_time, self.paused)
         system_invader_bullet_movement(self.ecs_world, self.delta_time, self.paused)
