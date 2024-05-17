@@ -5,6 +5,7 @@ from src.create.components.prefab_invader import (
     create_invaders_spawner,
     create_set_invaders,
 )
+from src.create.components.prefab_lives_indicator import create_life_indicator
 from src.create.components.prefab_player import create_c_player
 from src.create.components.prefab_text import (
     create_board_text,
@@ -32,6 +33,7 @@ def system_level_state(
     intro_cfg: dict,
     board_cfg: dict,
     game_end_cfg: dict,
+    lives_cfg: dict,
 ):
     components = world.get_components(CLevelState, CLevel)
 
@@ -41,7 +43,7 @@ def system_level_state(
         if c_state.state == LevelState.GAME_INTRO:
             _do_game_intro(world, c_state, c_level, intro_cfg, board_cfg)
         elif c_state.state == LevelState.GAME_STARTED:
-            _do_game_started_state(world, c_state, c_level, levels_cfg, player_cfg)
+            _do_game_started_state(world, c_state, c_level, levels_cfg, player_cfg, lives_cfg)
         elif c_state.state == LevelState.LEVEL_STARTED:
             _do_level_started_state(world, c_state, c_level, levels_cfg, enemies_cfg)
         elif c_state.state == LevelState.LEVEL_WON:
@@ -77,6 +79,7 @@ def _do_game_started_state(
     level: CLevel,
     levels_cfg: list[dict],
     player_cfg: dict,
+    lives_cfg: dict,
 ):
     print("game started")
     level.next_level = False
@@ -86,6 +89,7 @@ def _do_game_started_state(
         level.next_level = True
         level.completed = False
         level.player = create_c_player(world, player_cfg, levels_cfg[level.current])
+        p_lives = create_life_indicator(world, lives_cfg, level.player)
 
 
 def _do_level_started_state(
@@ -103,7 +107,7 @@ def _do_level_started_state(
         state.state = LevelState.LEVEL_WON
 
     player_tag: CTagPlayer = world.component_for_entity(level.player, CTagPlayer)
-    if player_tag.lifes <= 0:
+    if player_tag.lives <= 0:
         state.state = LevelState.LEVEL_LOST
 
 

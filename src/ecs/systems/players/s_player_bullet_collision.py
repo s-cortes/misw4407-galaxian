@@ -25,6 +25,7 @@ def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: in
 
                 if bullet_rect.colliderect(player_rect):
                     ecs_world.delete_entity(bullet_entity, True)
+                    player_c_t_e.lives -= 1
                     original_surface = player_c_s.surf
                     player_c_s.surf = pygame.Surface((0, 0))
                     ecs_world.add_component(player_entity_int, CIntangible())

@@ -16,6 +16,7 @@ from src.create.prefab_config import (
     configure_starfield,
     configure_window,
     configure_death,
+    configure_lives,
 )
 from src.create.components import create_intro_inputs
 from src.create.prefab_interface import (
@@ -47,6 +48,7 @@ from src.ecs.systems.players import (
     system_player_movement,
     system_player_screen_bounce,
     system_player_bullet_collision,
+    system_player_lives,
 )
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
@@ -71,6 +73,7 @@ class GameEngine:
         self.levels_cfg: dict = configure_levels()
         self.player_cfg: dict = configure_player()
         self.death_cfg: dict = configure_death()
+        self.lives_cfg: dict = configure_lives()
 
         # Configuracion base
         self.framerate = self.window_cfg["framerate"]
@@ -152,6 +155,7 @@ class GameEngine:
             self.intro_cfg,
             self.board_cfg,
             self.game_end_cfg,
+            self.lives_cfg,
         )
 
         system_update_invaders_spawner_time(self.ecs_world, self.delta_time)
@@ -185,6 +189,7 @@ class GameEngine:
         system_invader_bullet_collision(self.ecs_world, self.death_cfg)
         system_player_bullet_collision(self.ecs_world, self.player_id,
                                       self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
+        system_player_lives(self.ecs_world, self.player_id)
 
         # animation
         system_animation(self.ecs_world, self.delta_time)

@@ -13,6 +13,7 @@ LEVELS_CONFIG_PATH = "assets/cfg/levels.json"
 PLAYER_CONFIG_PATH = "assets/cfg/player.json"
 ENEMIES_CONFIG_PATH = "assets/cfg/enemies.json"
 DEATH_CONFIG_PATH = "assets/cfg/death_config.json"
+LIVES_CONFIG_PATH = "assets/cfg/lives_config.json"
 
 
 def _get_configuration(path: str) -> dict:
@@ -126,3 +127,6 @@ def configure_enemies() -> dict:
 
 def configure_death() -> dict:
     return _get_configuration(DEATH_CONFIG_PATH)
+
+def configure_lives() -> dict:
+    return _get_configuration(LIVES_CONFIG_PATH)
