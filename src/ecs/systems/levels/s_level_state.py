@@ -114,10 +114,10 @@ def _do_level_won_state(
     levels_cfg: list[dict],
     game_end_cfg: dict,
 ):
-    level.current = min(level.current + 1, len(levels_cfg) - 1)
+    level.current = level.current + 1
     _clear_invader_spawners(world)
 
-    if level.current == len(levels_cfg) - 1:
+    if level.current >= len(levels_cfg):
         state.state = LevelState.GAME_WON
         level.completed = True
         level.next_level = False
@@ -129,6 +129,7 @@ def _do_level_won_state(
     else:
         state.state = LevelState.LEVEL_STARTED
         level.next_level = True
+    level.current = min(level.current, len(levels_cfg) - 1)
 
 
 def _do_level_lost_state(

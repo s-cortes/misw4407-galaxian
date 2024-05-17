@@ -23,8 +23,8 @@
     "GAME_WON": {
         "sound": "assets/snd/game_over.ogg",
         "text": {
-            "text": "GAME OVER",
-            "color": "title_text_color",
+            "text": "Game Completed!",
+            "color": "normal_text_color",
             "font": "assets/fnt/PressStart2P.ttf",
             "size": 10,
             "velocity": {
