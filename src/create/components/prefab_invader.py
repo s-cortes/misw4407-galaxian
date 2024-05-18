@@ -65,22 +65,17 @@ def create_invaders_bullet_spawner(world: World, level_cfg: dict):
     world.add_component(entity, c_invader_bullet_spawner)
 
 
-def create_invader_bullet(ecs_world: esper.World, bullet_cfg: dict, player_entity: int,
-                          invader_surface: CSurface, invader_transform: CTransform):
+def create_invader_bullet(ecs_world: esper.World, bullet_cfg: dict, invader_transform: CTransform):
 
     bullet_position = invader_transform.pos.copy()
     bullet_size = pygame.Vector2(bullet_cfg['size']['x'], bullet_cfg['size']['y'])
     bullet_color = pygame.Color(bullet_cfg['color']['r'], bullet_cfg['color']['g'], bullet_cfg['color']['b'])
 
-    player_transform: CTransform = ecs_world.component_for_entity(player_entity, CTransform)
-
     b_c_transform = CTransform(bullet_position)
 
-    target_position = player_transform.pos.copy()
-
     velocity_normal = pygame.Vector2(
-        (target_position.x - b_c_transform.pos.x),
-        (target_position.y - b_c_transform.pos.y)).normalize()
+        (b_c_transform.pos.x - b_c_transform.pos.x),
+        ((b_c_transform.pos.y + 1000) - b_c_transform.pos.y)).normalize()
     bullet_velocity = (velocity_normal * bullet_cfg['velocity'])
 
     entity = create_square(ecs_world, bullet_position, bullet_size, bullet_velocity, bullet_color)

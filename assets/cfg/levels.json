@@ -14,15 +14,15 @@
         "invaders_range": 20,
         "invader_bullet": {
           "size": {
-            "x": 3,
-            "y": 5
+            "x": 2,
+            "y": 4
           },
           "color": {
-            "r": 100,
-            "g": 100,
-            "b": 100
+            "r": 255,
+            "g": 255,
+            "b": 255
           },
-          "velocity": 50
+          "velocity": 60
         },
         "invaders_bullet_spawner": {
           "shooters": 1,
@@ -177,17 +177,17 @@
       },
       "invaders_range": 20,
       "invader_bullet": {
-        "size": {
-          "x": 3,
-          "y": 5
+          "size": {
+            "x": 2,
+            "y": 4
+          },
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          },
+          "velocity": 60
         },
-        "color": {
-          "r": 100,
-          "g": 100,
-          "b": 100
-        },
-        "velocity": 50
-      },
       "invaders_bullet_spawner": {
         "shooters": 1,
         "spawner_time": 2
