@@ -6,7 +6,7 @@ class CTagInvader:
     def __init__(self, start_position: pygame.Vector2, attack_velocity: pygame.Vector2,
                  angular_velocity: float, return_velocity: pygame.Vector2,
                  move_velocity: pygame.Vector2, initial_surface: Surface, single_surface: Surface,
-                 launch_sound: str) -> None:
+                 launch_sound: str, invader_points: int) -> None:
         self.start_position = start_position.copy()
         self.oscillation_position = start_position.copy()
         self.attack_velocity = attack_velocity
@@ -18,3 +18,4 @@ class CTagInvader:
         self.initial_surface = initial_surface
         self.single_surface = single_surface
         self.launch_sound = launch_sound
+        self.invader_points = invader_points

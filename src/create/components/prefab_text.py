@@ -41,7 +41,13 @@ def create_board_text(world: World, text: dict):
 
     pos_fin = text["pos_fin"]
     pos_fin = Vector2(pos_fin[0] - (size[0] / 2), pos_fin[1] - (size[1] / 2))
-    world.add_component(entity, CTagBoard(pos_fin, text["text"], text["type"]))
+    world.add_component(entity, CTagBoard(pos_fin, 
+                                          text["text"],
+                                          text["type"],
+                                          text['name'],
+                                          text['color'],
+                                          text['font'],
+                                          text['size']))
     world.add_component(entity, CBoardState())
     return entity
 

@@ -1,0 +1,2 @@
+class CIntangible:
+    pass

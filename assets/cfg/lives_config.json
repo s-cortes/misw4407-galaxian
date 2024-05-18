@@ -1,0 +1,8 @@
+{
+    "image": "assets/img/invaders_life.png",
+    "lives": 3,
+    "position": {
+        "x": 190,
+        "y": 25
+      }
+}

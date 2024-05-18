@@ -1,6 +1,7 @@
 {
     "texts": [
         {
+            "name": "1up_indicator",
             "text": "1UP",
             "type": 0,
             "color": "title_text_color",
@@ -20,7 +21,8 @@
             }
         },
         {
-            "text": "00",
+            "name": "score_indicator",
+            "text": "0000",
             "type": 1,
             "color": "normal_text_color",
             "font": "assets/fnt/PressStart2P.ttf",
@@ -39,6 +41,7 @@
             }
         },
         {
+            "name": "hi_score_label",
             "text": "HI-SCORE",
             "type": 0,
             "color": "title_text_color",
@@ -58,6 +61,7 @@
             }
         },
         {
+            "name": "hi_score_indicator",
             "text": "high_score_max_value",
             "type": 1,
             "color": "high_score_color",
