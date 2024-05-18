@@ -4,7 +4,7 @@
     "image": "assets/img/invaders_enemy_01.png",
     "image_single": "assets/img/invaders_enemy_01_single.png",
     "angular_velocity": 3,
-    "points": 30,
+    "points": 1000,
     "animations": {
     "number_frames": 5,
     "list": [
