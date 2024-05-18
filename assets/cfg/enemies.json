@@ -4,7 +4,7 @@
     "image": "assets/img/invaders_enemy_01.png",
     "image_single": "assets/img/invaders_enemy_01_single.png",
     "angular_velocity": 3,
-    "points": 30,
+    "points": 50,
     "animations": {
     "number_frames": 5,
     "list": [
@@ -28,7 +28,7 @@
     "image": "assets/img/invaders_enemy_02.png",
     "image_single": "assets/img/invaders_enemy_02_single.png",
     "angular_velocity": 3,
-    "points": 80,
+    "points": 100,
     "animations": {
     "number_frames": 5,
     "list": [
@@ -53,7 +53,7 @@
     "image": "assets/img/invaders_enemy_03.png",
     "image_single": "assets/img/invaders_enemy_03_single.png",
     "angular_velocity": 3,
-    "points": 100,
+    "points": 150,
     "animations": {
     "number_frames": 5,
     "list": [

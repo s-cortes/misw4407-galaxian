@@ -39,6 +39,9 @@ def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: in
         return
 
 async def restore_player_surface_after_explosion(ecs_world: esper.World, player_entity: int, original_surface: pygame.Surface) -> None:
-    await asyncio.sleep(3)
-    ecs_world.component_for_entity(player_entity, CSurface).surf = original_surface
-    ecs_world.remove_component(player_entity, CIntangible)
+    try:
+        await asyncio.sleep(3)
+        ecs_world.component_for_entity(player_entity, CSurface).surf = original_surface
+        ecs_world.remove_component(player_entity, CIntangible)
+    except:
+        return

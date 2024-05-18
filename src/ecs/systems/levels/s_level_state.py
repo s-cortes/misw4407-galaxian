@@ -149,6 +149,7 @@ def _do_level_lost_state(
     create_info_text(world, game_end_cfg["GAME_OVER"]["text"])
     ServiceLocator.sounds_service.play(game_end_cfg["GAME_OVER"]["sound"])
     asyncio.ensure_future(_play_again(world, entity, state))
+    _reset_score(world)
 
 
 def _do_game_lost_state(world: World, entity: int, state: CLevelState, level: CLevel):
@@ -161,6 +162,7 @@ def _do_game_won_state(world: World, entity: int, state: CLevelState, level: CLe
     if level.restart:
         state.state = LevelState.GAME_INTRO
         _restart_levels(world, entity)
+        _reset_score(world)
 
 
 def _set_invaders(
@@ -186,16 +188,27 @@ def _restart_levels(world: World, level_entity: int):
     world.add_component(level_entity, CLevel())
 
 async def _play_again(world: World, level_entity: int, state: CLevelState):
-    await asyncio.sleep(4)
+    await asyncio.sleep(2)
     state.state = LevelState.GAME_INTRO
     for entity, (_) in world.get_component(CTagInfo):
         world.delete_entity(entity)
     for entity, (_) in world.get_component(CTagInvader):
         world.delete_entity(entity)
     ent = world.get_component(CTagPlayer)[0][0]
-    print(ent)
     world.remove_component(ent, CTagPlayer)
     world.remove_component(ent, CSurface)
     world.remove_component(level_entity, CLevel)
-    
     world.add_component(level_entity, CLevel())
+
+def _reset_score(world: World):
+    for entity, obj in world.get_component(CTagBoard):
+        if obj.label == 'score_indicator':
+            score_comp = obj
+            score_entity = entity
+            break
+    font = ServiceLocator.fonts_service.get(score_comp.font, score_comp.size)
+    score_comp.text = '0000'
+    color_tuple = tuple(score_comp.color_data.values())
+    surface = font.render(score_comp.text, True, color_tuple)
+    surface_comp = world.component_for_entity(score_entity, CSurface)
+    surface_comp.surf = surface

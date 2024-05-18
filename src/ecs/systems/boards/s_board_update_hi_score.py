@@ -11,11 +11,11 @@ def system_board_update_hi_score(ecs_world: World):
         if c_score[0][1].state == ScoreState.ON:
             for ent, obj in board_comps:
                 if obj.label == 'score_indicator':
-                    score_comp = ecs_world.component_for_entity(ent, CTagBoard)
+                    score_comp = obj
                     score_ent = ent
 
                 elif obj.label == 'hi_score_indicator':
-                    hi_score_comp = ecs_world.component_for_entity(ent, CTagBoard)
+                    hi_score_comp = obj
                     hi_score_ent = ent
             
             hi_score_to_int = int(hi_score_comp.text)

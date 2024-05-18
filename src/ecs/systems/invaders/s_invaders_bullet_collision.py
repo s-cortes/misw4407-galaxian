@@ -32,7 +32,7 @@ def _update_score(ecs_world: esper.World, enemy_ent: int):
         
         for ent, obj in board_comps:
             if obj.label == 'score_indicator':
-                score_comp = ecs_world.component_for_entity(ent, CTagBoard)
+                score_comp = obj
                 score_ent = ent
                 break
 
