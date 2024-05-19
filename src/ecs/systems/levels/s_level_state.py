@@ -24,6 +24,7 @@ from src.ecs.components.tags import (
     CTagIntro,
     CTagPlayer,
 )
+from src.ecs.components.tags.c_tag_lives import CTagLives
 from src.engine.services.service_locator import ServiceLocator
 
 
@@ -128,6 +129,7 @@ def _do_level_won_state(
         level.completed = True
         level.next_level = False
 
+        _reset_player_lives(world, level.player)
         world.delete_entity(level.player)
         level.player = None
 
@@ -212,3 +214,8 @@ def _reset_score(world: World):
     surface = font.render(score_comp.text, True, color_tuple)
     surface_comp = world.component_for_entity(score_entity, CSurface)
     surface_comp.surf = surface
+
+def _reset_player_lives(world: World, player_entity):
+    l_comp = world.component_for_entity(player_entity, CTagLives)
+    for ent in l_comp.ents:
+        world.delete_entity(ent, True)
