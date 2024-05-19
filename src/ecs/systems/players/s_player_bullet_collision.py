@@ -25,12 +25,14 @@ def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: in
 
                 if bullet_rect.colliderect(player_rect):
                     ecs_world.delete_entity(bullet_entity, True)
+                    actual_b = player_c_t_e.bullets
+                    player_c_t_e.bullets = 0
                     player_c_t_e.lives -= 1
                     original_surface = player_c_s.surf
                     player_c_s.surf = pygame.Surface((0, 0))
                     ecs_world.add_component(player_entity_int, CIntangible())
                     create_explosion(ecs_world, player_transform.pos, death_config['player'])
-                    asyncio.ensure_future(restore_player_surface_after_explosion(ecs_world, player_entity, original_surface))
+                    asyncio.ensure_future(restore_player_surface_after_explosion(ecs_world, player_entity, original_surface, actual_b))
                     player_transform.pos.x = config[0]
                     player_transform.pos.y = config[1]
 
@@ -38,10 +40,13 @@ def system_player_bullet_collision(ecs_world: esper.World, player_entity_int: in
     else:
         return
 
-async def restore_player_surface_after_explosion(ecs_world: esper.World, player_entity: int, original_surface: pygame.Surface) -> None:
+async def restore_player_surface_after_explosion(ecs_world: esper.World, player_entity: int, original_surface: pygame.Surface, p_bullets: int) -> None:
     try:
         await asyncio.sleep(3)
         ecs_world.component_for_entity(player_entity, CSurface).surf = original_surface
+        await asyncio.sleep(0.3)
         ecs_world.remove_component(player_entity, CIntangible)
+        ecs_world.component_for_entity(player_entity, CTagPlayer).bullets = p_bullets
+
     except:
         return
