@@ -1,0 +1,23 @@
+{
+  "image": {
+    "image": "assets/img/invaders_level_flag.png",
+    "position": {
+        "x": 229,
+        "y": 20
+    }
+  },
+  "level_text": {
+    "text": "01",
+    "color": {
+      "r": 250,
+      "g": 250,
+      "b": 250
+    },
+    "font": "assets/fnt/PressStart2P.ttf",
+    "size": 7,
+    "position": {
+        "x": 238,
+        "y": 27
+    }
+  }
+}

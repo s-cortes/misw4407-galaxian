@@ -32,8 +32,6 @@ def _do_move_state(c_velocity: CVelocity, c_animation: CAnimation,
     if c_invader.selected is True:
         c_invader_state.state = InvaderState.ATTACK
 
-        c_invader.selected = False
-
         c_velocity.vel = c_invader.attack_velocity
         c_velocity.angular_velocity = c_invader.angular_velocity
 
@@ -71,11 +69,7 @@ def _do_return_state(ecs_world: esper.World, c_velocity: CVelocity, c_invader_st
         c_surface.area.w = c_surface.surf.get_rect().w / c_anim.number_frames
         c_invader_state.state = InvaderState.MOVE
 
-        components = ecs_world.get_component(CInvaderSpawner)
-        c_spawner: CInvaderSpawner
-        for _, (c_spawner) in components:
-            c_spawner.spawn_is_on = False
-            c_spawner.time = 0.0
+        c_invader.selected = False
 
         if len(c_anim.animations) > 1:
             _set_animation(c_anim, 0)

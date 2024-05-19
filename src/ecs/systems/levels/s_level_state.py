@@ -91,7 +91,7 @@ def _do_game_started_state(
         level.next_level = True
         level.completed = False
         level.player = create_c_player(world, player_cfg, levels_cfg[level.current])
-        p_lives = create_life_indicator(world, lives_cfg, level.player)
+        create_life_indicator(world, lives_cfg, level.player)
 
 
 def _do_level_started_state(

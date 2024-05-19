@@ -16,7 +16,7 @@ from src.create.prefab_config import (
     configure_starfield,
     configure_window,
     configure_death,
-    configure_lives,
+    configure_lives, configure_level_assets,
 )
 from src.create.components import create_intro_inputs
 from src.create.prefab_interface import (
@@ -42,6 +42,7 @@ from src.ecs.systems.invaders.s_invaders_spawn import system_update_invaders_spa
 from src.ecs.systems.invaders.s_invaders_state import system_invaders_state
 from src.ecs.systems.invaders.s_invaders_bullet_collision import system_invader_bullet_collision
 from src.ecs.systems.levels import system_level_state
+from src.ecs.systems.levels.s_level_assets import system_level_text, system_level_assets
 from src.ecs.systems.players import (
     system_player_bullet_movement,
     system_player_bullet_screen_clear,
@@ -50,6 +51,7 @@ from src.ecs.systems.players import (
     system_player_bullet_collision,
     system_player_lives,
 )
+from src.ecs.systems.players.s_player_invader_collision import system_player_invader_collision
 from src.ecs.systems.stars import (
     system_star_screen_bounce,
     system_star_movement,
@@ -74,6 +76,7 @@ class GameEngine:
         self.player_cfg: dict = configure_player()
         self.death_cfg: dict = configure_death()
         self.lives_cfg: dict = configure_lives()
+        self.level_assets: dict = configure_level_assets()
 
         # Configuracion base
         self.framerate = self.window_cfg["framerate"]
@@ -157,6 +160,7 @@ class GameEngine:
             self.game_end_cfg,
             self.lives_cfg,
         )
+        system_level_assets(self.ecs_world, self.level_assets)
 
         system_update_invaders_spawner_time(self.ecs_world, self.delta_time)
         system_invader_spawner(self.ecs_world)
@@ -188,6 +192,8 @@ class GameEngine:
         system_player_bullet_screen_clear(self.ecs_world, self.player_tag)
         system_invader_bullet_collision(self.ecs_world, self.death_cfg)
         system_player_bullet_collision(self.ecs_world, self.player_id,
+                                      self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
+        system_player_invader_collision(self.ecs_world, self.player_id,
                                       self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
         system_player_lives(self.ecs_world, self.player_id)
         system_board_update_hi_score(self.ecs_world)
