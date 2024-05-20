@@ -63,7 +63,6 @@ def _do_game_intro(
     world: World, state: CLevelState, level: CLevel, intro_cfg: dict, board_cfg: bool
 ):
     if not world.get_component(CTagIntro):
-        print("game intro")
         for text in intro_cfg["texts"]:
             create_intro_text(world, text)
         for img in intro_cfg["images"]:
@@ -84,7 +83,6 @@ def _do_game_started_state(
     player_cfg: dict,
     lives_cfg: dict,
 ):
-    print("game started")
     level.next_level = False
     if not level.intro_active:
         state.state = LevelState.LEVEL_STARTED
