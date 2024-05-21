@@ -2,6 +2,7 @@ from pygame import Color, Vector2
 from esper import World
 from src.create.prefab_base import create_sprite, create_square
 from src.ecs.components.base import CSurface, CTransform, CLevel
+from src.ecs.components.invaders.c_player_intangible import CIntangible
 from src.ecs.components.states import CLevelState, CPlayerState
 from src.ecs.components.tags import CTagPlayer, CTagPlayerBullet
 from src.engine.services import ServiceLocator
@@ -36,17 +37,19 @@ def create_c_player_bullet(world: World, entity_p: int, player_cfg: dict):
     config = player_cfg["bullet"]
     ctp = world.component_for_entity(entity_p, CTransform)
     stp = world.component_for_entity(entity_p, CSurface)
+    exp = world.has_component(entity_p, CIntangible)
+    if(exp == False):
+        size = Vector2(2, 5)
+        pos = Vector2(
+            ctp.pos.x + (stp.area.w / 2) - (size.x / 2),
+            ctp.pos.y + (stp.area.h / 2) - (size.y / 2),
+        )
+        vel = Vector2(0, -config["velocity"])
+        color = Color(*config["color"])
 
-    size = Vector2(2, 5)
-    pos = Vector2(
-        ctp.pos.x + (stp.area.w / 2) - (size.x / 2),
-        ctp.pos.y + (stp.area.h / 2) - (size.y / 2),
-    )
-    vel = Vector2(0, -config["velocity"])
-    color = Color(*config["color"])
+        entity = create_square(world, pos, size, vel, color)
+        world.add_component(entity, CTagPlayerBullet())
 
-    entity = create_square(world, pos, size, vel, color)
-    world.add_component(entity, CTagPlayerBullet())
-
-    ServiceLocator.sounds_service.play(config["sound"])
-    return entity
+        ServiceLocator.sounds_service.play(config["sound"])
+        return entity
+    return

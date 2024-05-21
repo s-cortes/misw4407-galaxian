@@ -246,8 +246,6 @@ class GameEngine:
         elif c_input.name == InputName.PLAYER_Z:
             if c_input.phase == InputPhase.START:
                 if self.level.intro_active:
-                    print("clearing intro")
                     self.level.intro_active = False
                 elif self.level.completed:
-                    print("restarting game")
                     self.level.restart = True
