@@ -5,7 +5,7 @@
                 "x": 128,
                 "y": 200
             },
-            "max_bullets": 1000
+            "max_bullets": 1
         },
         "invaders_spawner": {
             "spawner_time": 2,
@@ -169,7 +169,7 @@
               "x": 128,
               "y": 200
           },
-          "max_bullets": 1000
+          "max_bullets": 1
       },
       "invaders_spawner": {
           "spawner_time": 2,
