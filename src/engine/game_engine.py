@@ -192,9 +192,9 @@ class GameEngine:
         system_player_bullet_screen_clear(self.ecs_world, self.player_tag)
         system_invader_bullet_collision(self.ecs_world, self.death_cfg, self.player_tag)
         system_player_bullet_collision(self.ecs_world, self.player_id,
-                                      self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
+                                      self.levels_cfg[self.level.current], self.death_cfg)
         system_player_invader_collision(self.ecs_world, self.player_id,
-                                      self.levels_cfg[self.level.current]['player']['position'], self.death_cfg)
+                                      self.levels_cfg[self.level.current], self.death_cfg)
         system_player_lives(self.ecs_world, self.player_id)
         system_board_update_hi_score(self.ecs_world)
 

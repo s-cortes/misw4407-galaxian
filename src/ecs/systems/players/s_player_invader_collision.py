@@ -31,17 +31,21 @@ def system_player_invader_collision(ecs_world: esper.World, player_entity_int: i
                     player_c_s.surf = pygame.Surface((0, 0))
                     ecs_world.add_component(player_entity_int, CIntangible())
                     create_explosion(ecs_world, player_transform.pos, death_config['player'])
-                    asyncio.ensure_future(restore_player_surface_after_explosion(ecs_world, player_entity, original_surface))
-                    player_transform.pos.x = config[0]
-                    player_transform.pos.y = config[1]
-
+                    asyncio.ensure_future(restore_player_surface_after_explosion(ecs_world, player_entity, original_surface, config))
+                    player_transform.pos.x = config['player']['position'][0]
+                    player_transform.pos.y = config['player']['position'][1]
     else:
         return
 
-async def restore_player_surface_after_explosion(ecs_world: esper.World, player_entity: int, original_surface: pygame.Surface) -> None:
+async def restore_player_surface_after_explosion(ecs_world: esper.World, player_entity: int, original_surface: pygame.Surface, config: dict) -> None:
     try:
         await asyncio.sleep(3)
         ecs_world.component_for_entity(player_entity, CSurface).surf = original_surface
-        ecs_world.remove_component(player_entity, CIntangible)
+        await asyncio.sleep(0.3)
+        try:
+            ecs_world.remove_component(player_entity, CIntangible)
+        except:
+            pass
+        ecs_world.component_for_entity(player_entity, CTagPlayer).bullets = config['player']['max_bullets']
     except:
         return
